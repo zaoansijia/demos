@@ -91,7 +91,7 @@ class Promise {
 //   }
 // }
 const promise = new Promise((resolve,reject)=>{
-  reject('成功jj');
+  reject('成功');
 }).then((res)=>{
   console.log(res,'res');
 },(err)=>{
