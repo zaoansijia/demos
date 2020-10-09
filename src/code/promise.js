@@ -1,3 +1,4 @@
+
 // 手写promise；
 class Promise {
   constructor(fn) {
@@ -13,11 +14,19 @@ class Promise {
     // 调用此函数表示成功
     const resolve = (data) => {
       if (this.status !== 'pending') return;
+      // console.log('resolve-----',data);
       this.status = 'fulfilled';
       setTimeout(() => {
         this.resoveList.forEach(s => {
-          // 从新赋值data的值继承上个resolve的返回值
-          data = s(data);
+          console.log('foreach------',data, typeof s);
+          // data = s(data);
+
+          if((typeof s==='object'&&s !== null) || typeof s === 'function') {
+            data = s(data);
+           // 从新赋值data的值继承上个resolve的返回值
+          }else {
+            data = s;
+          }
         })
       })
     }
@@ -136,10 +145,7 @@ const p = new Promise((resolve, reject) => {
   }, 1000)
 })
 // p.resolve(2);
-p.then(data => {
-  console.log('data1', data);
-  return '成功了2';
-}).then(data2 => {
+p.then('成功了2').then(data2 => {
   console.log('data2', data2);
   return '成功了3'
 }).then(data3 => {
